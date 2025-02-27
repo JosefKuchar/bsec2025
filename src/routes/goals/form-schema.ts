@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 export const goalSchema = z.object({
   id: z.number().int().positive().optional(), // Optional because it's auto-generated
