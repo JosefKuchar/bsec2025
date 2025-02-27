@@ -3,7 +3,7 @@ import prisma from '$lib/prisma';
 import { z } from 'zod';
 
 const deleteSchema = z.object({
-    id: z.string().min(1)
+    id: z.number().int().positive()
 });
 
 export async function DELETE({ request }) {
