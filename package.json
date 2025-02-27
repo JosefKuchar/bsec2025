@@ -41,6 +41,9 @@
 	},
 	"dependencies": {
 		"@prisma/client": "^6.4.1",
-		"@tailwindcss/vite": "^4.0.8"
+		"@tailwindcss/vite": "^4.0.8",
+		"d3-array": "^3.2.4",
+		"d3-scale": "^4.0.2",
+		"layerchart": "^1.0.0"
 	}
 }
