@@ -1,4 +1,7 @@
 import type { PageServerLoad } from './$types';
+import { superValidate } from "sveltekit-superforms";
+import { formSchema } from "./form-schema";
+import { zod } from "sveltekit-superforms/adapters";
 
 export const load: PageServerLoad = async () => {
 	// Mocked payment data
@@ -20,6 +23,7 @@ export const load: PageServerLoad = async () => {
 	];
 
 	return {
-		goals
+		goals,
+		form: await superValidate(zod(formSchema))
 	};
 };
