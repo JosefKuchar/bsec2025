@@ -7,7 +7,6 @@
 	const desc = change.type.emoji + ' ' + change.type.name;
 	const date =
 		new Date(change.from).toLocaleString() + ' - ' + new Date(change.to).toLocaleString();
-	const freq = change.frequency;
 	// console.debug(freq);
 </script>
 
@@ -15,7 +14,6 @@
 	<Dialog.Trigger class="size-full p-4">
 		<div class="flex flex-row items-center justify-between">
 			<p class="text-lg font-bold">{desc}</p>
-			<p class="text-sm text-gray-500">{freq}</p>
 			<p class="text-sm text-gray-500">{date}</p>
 		</div>
 	</Dialog.Trigger>
