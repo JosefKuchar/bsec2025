@@ -21,7 +21,6 @@ export async function calculateOneTimePayments(year: number, month: number): Pro
 
     const changes = await prisma.change.findMany({
         where: {
-            frequency: 1,
             from: {
                 gte: startDate,
                 lte: endDate
