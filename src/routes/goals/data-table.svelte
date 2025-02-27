@@ -8,11 +8,20 @@
     
     type DataTableProps<TData, TValue> = {
      columns: ColumnDef<TData, TValue>[];
-     data: TData[];
+      TData[];
     };
-    
+
+    function mapTypeValue(value: number): string {
+      switch(value) {
+        case 0: return 'Percentage';
+        case 1: return 'Abs';
+        case 2: return 'Difference';
+        default: return value.toString();
+      }
+    }
+
     let { data, columns }: DataTableProps<TData, TValue> = $props();
-    
+
     const table = createSvelteTable({
      get data() {
       return data;
