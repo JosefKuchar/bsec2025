@@ -16,6 +16,9 @@ export const load = (async () => {
 					name: true
 				}
 			}
+		},
+		orderBy: {
+			from: 'desc'
 		}
 	});
 
@@ -27,8 +30,8 @@ export const load = (async () => {
 	return {
 		changes: changes.map((change) => ({
 			id: change.id,
-			from: moment(change.from).format('DD.MM.YYYY'),
-			to: moment(change.to).format('DD.MM.YYYY'),
+			to: change.to,
+			from: change.from,
 			amount: change.amount,
 			type: {
 				id: change.type.id,
