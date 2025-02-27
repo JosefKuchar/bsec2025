@@ -49,7 +49,8 @@
     console.log('Save button clicked');
     const name = document.querySelector('input[label="Name"]').value;
     const description = document.querySelector('input[label="Description"]').value;
-    console.log(name, description);
+    const amount = document.querySelector('input[label="Amount"]').value;
+    console.log(name, description, amount);
     try {
       const response = await fetch(`/api/goals/edit`, {  // No need to add `/${id}`
           method: 'PUT',
