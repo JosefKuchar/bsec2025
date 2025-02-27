@@ -3,6 +3,7 @@
 	import { columns } from "./columns.js";
 	import type { PageData } from "./$types";
 	import * as Dialog from "$lib/components/ui/dialog/index.js";
+	import { Button } from "$lib/components/ui/button/index.js";
 	import GoalForm from "./goal-form.svelte";
 	import { enhance } from "$app/forms";
   
