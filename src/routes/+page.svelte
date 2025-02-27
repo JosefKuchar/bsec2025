@@ -156,22 +156,20 @@
 		const goalValue = goal.value;
 
 		console.log(data.months[currentMonth]);
+		console.log(data.balance);
 
 		if (data.balance <= 0) {
 			return 0;
 		}
 
-		if (goal.type == 1) {
+		if (goal.type == 0) {
 			const goalAmount = goalValue * data.months[currentMonth].positiveAmount;
 			console.log(data.balance / goalAmount);
 			return data.balance / goalAmount;
 		}
 
-		if (data.balance >= goalValue) {
-			return 100;
-		}
-
-		return (data.balance / goalValue) * 100;
+		console.log((data.months[currentMonth].netAmount / goalValue) * 100);
+		return (data.months[currentMonth].netAmount / goalValue) * 100;
 	}
 
 	let spinnedToday = false;
