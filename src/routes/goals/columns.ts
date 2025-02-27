@@ -17,27 +17,27 @@ export type Goal = {
 export const columns: ColumnDef<Goal>[] = [
 	{
 		accessorKey: 'name',
-		header: 'Title'
+		header: 'Název'
 	},
 	{
 		accessorKey: 'description',
-		header: 'Description'
+		header: 'Popis'
 	},
 	{
 		accessorKey: 'value',
-		header: 'Value',
+		header: 'Cílová hodnota',
 		cell: ({ row }) => {
 			// if type is percentage, show value as a percentage
 			console.log(row.original.type);
 			if (row.original.type == 0) {
 				// percent, style it green if positive, red if negative
-				return `${row.original.value}%`;
+				return `${row.original.value} %`;
 			} else if (row.original.type == 2) {
 				// difference
 				return `±${row.original.value}`;
 			} else {
 				// amount
-				return row.original.value;
+				return row.original.value + ' Kč';
 			}
 		}
 	},
