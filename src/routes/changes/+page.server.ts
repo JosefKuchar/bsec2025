@@ -19,6 +19,11 @@ export const load = (async () => {
 		}
 	});
 
+	const types = await prisma.changeType.findMany();
+
+	console.debug('changes:', changes);
+	console.debug('types:', types);
+
 	return {
 		changes: changes.map((change) => ({
 			id: change.id,
@@ -30,6 +35,11 @@ export const load = (async () => {
 				emoji: change.type.emoji,
 				name: change.type.name
 			}
+		})),
+		types: types.map((type) => ({
+			id: type.id,
+			emoji: type.emoji,
+			name: type.name
 		}))
 	};
 }) satisfies PageServerLoad;
