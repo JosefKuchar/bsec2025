@@ -1,148 +1,104 @@
 <script lang="ts">
-	import * as Form from '$lib/components/ui/form/index.js';
-	import * as RadioGroup from '$lib/components/ui/radio-group/index.js';
-	import { Input } from '$lib/components/ui/input/index.js';
-	import { formSchema as formSchema, type ChangeFormSchema } from './form-schema';
-	import { type SuperValidated, type Infer, superForm } from 'sveltekit-superforms';
-	import { zodClient } from 'sveltekit-superforms/adapters';
-	import { createEventDispatcher } from 'svelte';
-	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
-	import prisma from '$lib/prisma';
+	// Import necessary types or interfaces if you have them
+	// import type { Change } from '$lib/types'; // Example: Assuming you have a Change type
 
+	// Define variables to hold form data
+	let amount: number = 0;
+	let from: string = ''; // Or Date, depending on your needs
+	let to: string = '';
+	let changeTypeId: number | null = null; // Assuming changeTypeId is a number
+	let description: string = '';
+
+	// Example: Assuming you have a list of change types to populate a select
+	export let changeTypes: { id: number; name: string }[] = [];
+
+	// Event dispatcher to emit the form data
+	import { createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher();
 
-	let {
-		data,
-		change,
-		types
-	}: {
-		data: { form: SuperValidated<Infer<ChangeFormSchema>> };
-		change: {
-			id: number;
-			from: Date;
-			to: Date;
-			amount: number;
-			type: { id: number; emoji: string; name: string };
+	// Function to handle form submission
+	function handleSubmit(event: Event) {
+		event.preventDefault(); // Prevent default form submission
+
+		// Create an object with the form data
+		const formData = {
+			amount,
+			from,
+			to,
+			changeTypeId,
+			description
 		};
-		types: { id: number; emoji: string; name: string }[];
-	} = $props();
 
-	const form = superForm(data.form, {
-		validators: zodClient(formSchema),
-		dataType: 'json',
-		onResult: ({ result }) => {
-			if (result.type === 'success') {
-				dispatch('success');
-			}
-		}
-	});
+		// Dispatch a custom event with the form data
+		dispatch('formSubmit', formData);
 
-	const { form: formData, enhance } = form;
+		// Optionally, reset the form
+		amount = 0;
+		from = '';
+		to = '';
+		changeTypeId = null;
+		description = '';
+	}
 </script>
 
-<form
-	method="POST"
-	onsubmit={(event: any) => {
-		const formData = new FormData(event.target);
+<form on:submit={handleSubmit} class="space-y-4">
+	<div>
+		<label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
+		<input
+			type="number"
+			id="amount"
+			bind:value={amount}
+			class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+		/>
+	</div>
 
-		console.log('Form data submitted:', formData);
+	<div>
+		<label for="from" class="block text-sm font-medium text-gray-700">From</label>
+		<input
+			type="date"
+			id="from"
+			bind:value={from}
+			class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+		/>
+	</div>
 
-		fetch('/api/changes', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(formData)
-		})
-			.then((response) => response.json())
-			.then((data) => {
-				console.log('Success:', data);
-				// closeModal();
-			})
-			.catch((error) => {
-				console.error('Error:', error);
-			});
-	}}
-	use:enhance
->
-	<Form.Fieldset {form} name="type">
-		<Form.Legend>Type</Form.Legend>
-		<RadioGroup.Root
-			bind:value={$formData.type}
-			class="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex h-10 w-full rounded-md border px-3 py-2 text-base file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+	<div>
+		<label for="to" class="block text-sm font-medium text-gray-700">To</label>
+		<input
+			type="date"
+			id="to"
+			bind:value={to}
+			class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+		/>
+	</div>
+
+	<div>
+		<label for="changeType" class="block text-sm font-medium text-gray-700">Change Type</label>
+		<select
+			id="changeType"
+			bind:value={changeTypeId}
+			class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
 		>
-			<DropdownMenu.Root>
-				<DropdownMenu.Trigger class="size-full"
-					><div class="flex justify-between">
-						<p>Typ pohybu</p>
-						<sup class="text-xl">⌄</sup>
-					</div></DropdownMenu.Trigger
-				>
-				<DropdownMenu.Content>
-					<DropdownMenu.Group>
-						<DropdownMenu.Item>
-							<Form.Control>
-								{#snippet children({ props })}
-									<RadioGroup.Item value="Příjem" {...props} />
-									<Form.Label class="font-normal">Příjem</Form.Label>
-								{/snippet}
-							</Form.Control>
-						</DropdownMenu.Item>
-						<DropdownMenu.Item>
-							<Form.Control>
-								{#snippet children({ props })}
-									<RadioGroup.Item value="Výdaj" {...props} />
-									<Form.Label class="font-normal">Výdaj</Form.Label>
-								{/snippet}
-							</Form.Control>
-						</DropdownMenu.Item>
-						<DropdownMenu.Item>
-							<Form.Control>
-								{#snippet children({ props })}
-									<RadioGroup.Item value="Dar" {...props} />
-									<Form.Label class="font-normal">Dar</Form.Label>
-								{/snippet}
-							</Form.Control>
-						</DropdownMenu.Item>
-						<DropdownMenu.Item>
-							<Form.Control>
-								{#snippet children({ props })}
-									<RadioGroup.Item value="Potraviny" {...props} />
-									<Form.Label class="font-normal">Potraviny</Form.Label>
-								{/snippet}
-							</Form.Control>
-						</DropdownMenu.Item>
-						<DropdownMenu.Item>
-							<Form.Control>
-								{#snippet children({ props })}
-									<RadioGroup.Item value="Dům" {...props} />
-									<Form.Label class="font-normal">Dům</Form.Label>
-								{/snippet}
-							</Form.Control>
-						</DropdownMenu.Item>
-						<DropdownMenu.Item>
-							<Form.Control>
-								{#snippet children({ props })}
-									<RadioGroup.Item value="Ostatní" {...props} />
-									<Form.Label class="font-normal">Ostatní</Form.Label>
-								{/snippet}
-							</Form.Control>
-						</DropdownMenu.Item>
-					</DropdownMenu.Group>
-				</DropdownMenu.Content>
-			</DropdownMenu.Root>
-		</RadioGroup.Root>
-	</Form.Fieldset>
+			<option value="">Select a type</option>
+			{#each changeTypes as type}
+				<option value={type.id}>{type.name}</option>
+			{/each}
+		</select>
+	</div>
 
-	<Form.Field {form} name="amount">
-		<Form.Control>
-			{#snippet children({ props })}
-				<Form.Label>Amount</Form.Label>
-				<Input {...props} bind:value={$formData.amount} />
-			{/snippet}
-		</Form.Control>
-		<Form.FieldErrors />
-	</Form.Field>
+	<div>
+		<label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+		<textarea
+			id="description"
+			bind:value={description}
+			class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+		/>
+	</div>
 
-	<Form.Button>Submit</Form.Button>
+	<button
+		type="submit"
+		class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+	>
+		Submit
+	</button>
 </form>
