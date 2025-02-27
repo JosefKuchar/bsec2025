@@ -29,8 +29,12 @@
 import { onMount } from "svelte";
 
 onMount(() => {
-  if (formData.type !== undefined) {
-    formData.type = Number(formData.type);
+  formData.type = Number(formData.type);
+  // if (formData.type !== undefined) {
+  //   formData.type = Number(formData.type);
+  // }
+  if (formData.amount !== undefined) {
+    formData.amount = Number(formData.amount);
   }
 });
 
@@ -59,11 +63,11 @@ onMount(() => {
     <Form.FieldErrors />
   </Form.Field>
 
-  <Form.Field {form} name="amount">
+  <Form.Field {form} name="value">
     <Form.Control>
       {#snippet children({ props })}
         <Form.Label>Amount</Form.Label>
-        <Input {...props} bind:value={$formData.amount} />
+        <Input {...props} bind:value={$formData.value} type="number" />
       {/snippet}
     </Form.Control>
     <Form.Description>The amount you want to save.</Form.Description>
@@ -74,17 +78,18 @@ onMount(() => {
     <Form.Control>
       {#snippet children({ props })}
         <Form.Label>Type</Form.Label>
+        <!-- Convert select value from string to number -->
         <Select.Root type="single" name={props.name} bind:value={$formData.type}>
           <Select.Trigger {...props}>
-            {$formData.type == 0
+            {$formData.type == "0"
               ? "Percentage"
-              : $formData.type == 1
+              : $formData.type == "1"
               ? "Amount"
               : "Select a goal type"}
           </Select.Trigger>
           <Select.Content>
-            <Select.Item value=0>Percentage</Select.Item>
-            <Select.Item value=1>Amount</Select.Item>
+            <Select.Item value="0">Percentage</Select.Item>
+            <Select.Item value="1">Amount</Select.Item>
           </Select.Content>
         </Select.Root>
       {/snippet}
