@@ -30,14 +30,14 @@
     });
    </script>
     
-    <div class="rounded-lg border border-gray-600 shadow-md overflow-hidden">
+    <div class="rounded-24 overflow-hidden">
         <Table.Root class="w-full border-collapse">
           <!-- Table Header -->
-          <Table.Header class="bg-gray-800 text-gray-300">
+          <Table.Header class="bg-red">
             {#each table.getHeaderGroups() as headerGroup (headerGroup.id)}
-              <Table.Row class="border-b border-gray-600">
+              <Table.Row>
                 {#each headerGroup.headers as header (header.id)}
-                  <Table.Head class="px-4 py-3 text-left font-semibold uppercase tracking-wide">
+                  <Table.Head class="text-white text-left text-bold">
                     {#if !header.isPlaceholder}
                       <FlexRender content={header.column.columnDef.header} context={header.getContext()} />
                     {/if}
