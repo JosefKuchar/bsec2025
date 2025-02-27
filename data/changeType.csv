@@ -1,7 +1,8 @@
 id,emoji,name,dir
-1,💰,Příjem,1
-2,💳,Výdaj,2
-3,🎁,Dar,1
+1,💸,Plat,1
+2,💳,Předplatné,2
+3,💰,Spořící účet,2
 4,🛒,Potraviny,2
 5,🏠,Dům,2
-6,❓,Ostatní Card,2
+6,📈,Investice,1
+7,❓,Ostatní,2
