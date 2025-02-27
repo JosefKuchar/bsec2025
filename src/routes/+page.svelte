@@ -145,7 +145,16 @@
 		if (container) {
 			const props = {
 				items: wheelItems,
-				radius: 1
+				radius: 1,
+				itemLabelColors: ['#fff'],
+    itemLabelBaselineOffset: -0.07,
+    itemLabelFont: 'Amatic SC',
+    itemLabelFontSizeMax: 55,
+    itemBackgroundColors: ['#2ac238', '#ffc93c', '#66bfbf', '#a2d5f2', '#515070', '#43658b', '#ed6663', '#d54062' ],
+    rotationSpeedMax: 500,
+    rotationResistance: -100,
+    lineWidth: 1,
+    lineColor: '#fff',
 			};
 			
 			wheel = new Wheel(container, props);
