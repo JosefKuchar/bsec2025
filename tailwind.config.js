@@ -65,6 +65,12 @@ const config = {
 					border: "hsl(var(--sidebar-border))",
 					ring: "hsl(var(--sidebar-ring))",
         		},
+				surface: {
+					100: "hsl(var(--color-surface-100) / <alpha-value>)",
+					200: "hsl(var(--color-surface-200) / <alpha-value>)",
+					300: "hsl(var(--color-surface-300) / <alpha-value>)",
+					content: "hsl(var(--color-surface-content) / <alpha-value>)"
+				}
 			},
 			borderRadius: {
 				'24': "24px",
