@@ -20,7 +20,7 @@
 </script>
  
 <form method="POST" use:enhance>
- <Form.Field {form} name="username">
+ <Form.Field {form} name="name">
   <Form.Control>
    {#snippet children({ props })}
     <Form.Label>Username</Form.Label>
