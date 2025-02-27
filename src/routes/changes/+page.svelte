@@ -4,7 +4,6 @@
 	let changes = data.changes;
 	let types = data.types;
 	import ChangeModal from '$lib/components/ui/change_modal/ChangeModal.svelte';
-	console.debug(changes);
 </script>
 
 <svelte:head>
