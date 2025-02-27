@@ -9,6 +9,7 @@ export const load = (async () => {
 			id: true,
 			from: true,
 			to: true,
+			amount: true,
 			frequency: true,
 			type: {
 				select: {
@@ -25,12 +26,13 @@ export const load = (async () => {
 			id: change.id,
 			from: moment(change.from).format('DD.MM.YYYY'),
 			to: moment(change.to).format('DD.MM.YYYY'),
+			amount: change.amount,
 			frequency: getFrequencyString(change.frequency),
 			type: {
 				id: change.type.id,
 				emoji: change.type.emoji,
 				name: change.type.name
-			},
+			}
 		}))
 	};
 }) satisfies PageServerLoad;

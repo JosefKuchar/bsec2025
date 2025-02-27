@@ -27,7 +27,6 @@ model ChangeType {
 model Change {
   id        Int        @id @default(autoincrement())
   typeId    Int
-  frequency Int // 0 - jednorazove
   amount    Int
   from      DateTime // datum aj pre jednorazove
   to        DateTime
