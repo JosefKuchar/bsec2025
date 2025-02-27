@@ -54,17 +54,30 @@
 	});
 
 	const goalsLongterm = data.goals.map((goal) => {
-		const streak = Math.floor(Math.random() * 15);
-		const color = streakToColor(streak);
-
 		let data = [];
 		for (let i = 0; i < 24; i++) {
-			data.push(Math.random() < 0.5);
+			data.push(Math.random() < 0.8);
 		}
+
+		// Calculate max streak
+		let streak = 0;
+		let maxStreak = 0;
+		for (let i = 0; i < data.length; i++) {
+			if (data[i]) {
+				streak++;
+				if (streak > maxStreak) {
+					maxStreak = streak;
+				}
+			} else {
+				streak = 0;
+			}
+		}
+
+		const color = streakToColor(maxStreak);
 
 		return {
 			name: goal.name,
-			streak,
+			streak: maxStreak,
 			color,
 			data
 		};
