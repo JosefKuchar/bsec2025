@@ -27,7 +27,7 @@
        Copy ID
       </DropdownMenu.Item>
       <DropdownMenu.Item 
-        on:click={async () => {
+        onclick={async () => {
           try {
             const response = await fetch('/api/goals/delete', {
               method: 'DELETE',
