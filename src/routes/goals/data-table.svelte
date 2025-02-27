@@ -8,7 +8,6 @@
     
     type DataTableProps<TData, TValue> = {
      columns: ColumnDef<TData, TValue>[];
-      TData[];
     };
 
     function mapTypeValue(value: number): string {
