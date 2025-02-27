@@ -9,12 +9,11 @@
 	</div>
 	<div class="col-span-6 flex justify-center">
 		<div
-			class="rounded-24 flex w-fit gap-[20px] bg-white px-[30px] py-[10px] transition duration-150"
+			class="rounded-24 flex w-fit gap-[32px] bg-white px-[30px] py-[10px] transition duration-150"
 		>
-			<a href="/" class="underline-link text-link-primary text-[16px] font-bold">🧐 Přehled</a>
-			<a href="/changes" class="underline-link text-link-primary text-[16px] font-bold">🏃‍♂️ Pohyby</a
-			>
-			<a href="/goals" class="underline-link text-link-primary text-[16px] font-bold">✨ Cíle</a>
+			<a href="/" class="underline-link text-blue text-[16px] font-bold">Dashboard</a>
+			<a href="/changes" class="underline-link text-blue text-[16px] font-bold">Zmeny</a>
+			<a href="/goals" class="underline-link text-blue text-[16px] font-bold">Ciele</a>
 		</div>
 	</div>
 	<div class="col-span-3 flex justify-end">

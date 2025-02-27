@@ -30,14 +30,14 @@
     });
    </script>
     
-    <div class="rounded-lg border border-gray-600 shadow-md overflow-hidden">
+    <div class="rounded-24 overflow-hidden">
         <Table.Root class="w-full border-collapse">
           <!-- Table Header -->
-          <Table.Header class="bg-gray-800 text-gray-300">
+          <Table.Header class="text-white">
             {#each table.getHeaderGroups() as headerGroup (headerGroup.id)}
-              <Table.Row class="border-b border-gray-600">
+              <Table.Row class="bg-red hover:bg-red">
                 {#each headerGroup.headers as header (header.id)}
-                  <Table.Head class="px-4 py-3 text-left font-semibold uppercase tracking-wide">
+                  <Table.Head class="text-white text-left text-bold">
                     {#if !header.isPlaceholder}
                       <FlexRender content={header.column.columnDef.header} context={header.getContext()} />
                     {/if}
@@ -51,16 +51,12 @@
           <Table.Body>
             {#each table.getRowModel().rows as row (row.id)}
               <Table.Row 
-                class="border-b border-gray-700 hover:bg-gray-700 transition duration-200"
+                class="bg-white border-b border-black duration-300 transition-all border-opacity-20 hover:bg-blue"
                 data-state={row.getIsSelected() && "selected"}
               >
                 {#each row.getVisibleCells() as cell (cell.id)}
                   <Table.Cell class="px-4 py-3">
-                    {#if cell.column.id === 'type'}
-                      {mapTypeValue(cell.getValue() as number)}
-                    {:else}
-                      <FlexRender content={cell.column.columnDef.cell} context={cell.getContext()} />
-                    {/if}
+                    <FlexRender content={cell.column.columnDef.cell} context={cell.getContext()} />
                   </Table.Cell>
                 {/each}
               </Table.Row>
