@@ -1,7 +1,6 @@
 import prisma from '$lib/prisma';
 import moment from 'moment';
 import type { PageServerLoad } from './$types';
-import { getFrequencyString } from '$lib/utils';
 
 export const load = (async () => {
 	const changes = await prisma.change.findMany({
@@ -10,7 +9,6 @@ export const load = (async () => {
 			from: true,
 			to: true,
 			amount: true,
-			frequency: true,
 			type: {
 				select: {
 					id: true,
@@ -27,7 +25,6 @@ export const load = (async () => {
 			from: moment(change.from).format('DD.MM.YYYY'),
 			to: moment(change.to).format('DD.MM.YYYY'),
 			amount: change.amount,
-			frequency: getFrequencyString(change.frequency),
 			type: {
 				id: change.type.id,
 				emoji: change.type.emoji,

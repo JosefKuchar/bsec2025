@@ -1,3 +1,5 @@
+import { json } from '@sveltejs/kit';
+import type { RequestHandler } from './$types';
 import prisma from '$lib/prisma';
 import { startOfMonth, endOfMonth } from 'date-fns';
 
@@ -6,6 +8,7 @@ interface CategorySummary {
   name: string;
   emoji: string;
   amount: number;
+  isIncome: boolean;
 }
 
 interface PaymentSummary {
@@ -15,9 +18,9 @@ interface PaymentSummary {
   categories: CategorySummary[];
 }
 
-export async function calculateOneTimePayments(year: number, month: number): Promise<PaymentSummary> {
-    const startDate = startOfMonth(new Date(year, month - 1));
-    const endDate = endOfMonth(startDate);
+async function calculateOneTimePayments(year: number, month: number): Promise<PaymentSummary> {
+    var startDate = new Date(year, month-1, 2);
+    var endDate = new Date(year, month, 1);
 
     const changes = await prisma.change.findMany({
         where: {
@@ -32,7 +35,7 @@ export async function calculateOneTimePayments(year: number, month: number): Pro
     });
 
     let positiveAmount = 0;
-    let negativeAmount = 0;
+    let negativeAmount = 0;    
     const categoryMap = new Map<number, CategorySummary>();
 
     for (const change of changes) {
@@ -48,7 +51,8 @@ export async function calculateOneTimePayments(year: number, month: number): Pro
                 id: typeId,
                 name: change.type.name,
                 emoji: change.type.emoji,
-                amount: 0
+                amount: 0,
+                isIncome: change.type.dir === 1
             });
         }
         
@@ -66,3 +70,38 @@ export async function calculateOneTimePayments(year: number, month: number): Pro
         categories
     };
 }
+
+export const GET: RequestHandler = async ({ url }) => {
+  try {
+    const yearParam = url.searchParams.get('year');
+    const monthParam = url.searchParams.get('month');
+
+    if (!yearParam || !monthParam) {
+      return new Response(
+        JSON.stringify({ error: 'Year and month parameters are required' }), 
+        { status: 400 }
+      );
+    }
+    
+    const year = parseInt(yearParam);
+    const month = parseInt(monthParam);
+    console.log(year);
+    console.log(month);
+    
+    if (isNaN(year) || isNaN(month)) {
+      return new Response(
+        JSON.stringify({ error: 'Year and month must be valid numbers' }), 
+        { status: 400 }
+      );
+    }
+    
+    const result = await calculateOneTimePayments(year, month);
+    return json(result);
+  } catch (error) {
+    console.log('Error calculating payments:', error);
+    return new Response(
+      JSON.stringify({ error: 'Failed to calculate payments' }), 
+      { status: 500 }
+    );
+  }
+};
