@@ -10,7 +10,7 @@
 	export let data: PageData;
   </script>
   
-  <div class="space-y-4 container">
+  <div class="pb-[40px] space-y-4 container">
 	<Dialog.Root>
 		<Dialog.Trigger>
 		  <Button>+ New Goal</Button>

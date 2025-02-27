@@ -33,9 +33,9 @@
     <div class="rounded-24 overflow-hidden">
         <Table.Root class="w-full border-collapse">
           <!-- Table Header -->
-          <Table.Header class="bg-red">
+          <Table.Header class="text-white">
             {#each table.getHeaderGroups() as headerGroup (headerGroup.id)}
-              <Table.Row>
+              <Table.Row class="bg-red hover:bg-red">
                 {#each headerGroup.headers as header (header.id)}
                   <Table.Head class="text-white text-left text-bold">
                     {#if !header.isPlaceholder}
@@ -51,7 +51,7 @@
           <Table.Body>
             {#each table.getRowModel().rows as row (row.id)}
               <Table.Row 
-                class="border-b border-gray-700 hover:bg-gray-700 transition duration-200"
+                class="bg-white border-b border-black duration-300 transition-all border-opacity-20 hover:bg-blue"
                 data-state={row.getIsSelected() && "selected"}
               >
                 {#each row.getVisibleCells() as cell (cell.id)}
