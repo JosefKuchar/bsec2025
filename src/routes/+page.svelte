@@ -59,8 +59,8 @@
 	const months = data.months;
 	const goalsLongterm = data.goals.map((goal) => {
 		let data = [];
-		for (let i = 0; i < 24; i++) {
-			let cat = months[i].categories.find((category) => category.id === goal.changeTypeId);
+		for (let i = 0; i < 12; i++) {
+			let cat = months[i].categories.find((category: { id: number }) => category.id === goal.changeTypeId);
 			if (cat) {
 				if (cat.amount > goal.value) {
 					data.push(true);
@@ -124,6 +124,38 @@
 	const spinWheel = () => {
 		wheel.spinToItem(1, 4000, true, 10);
 	};
+
+	console.log(data.months[2]);
+	data.months[1].positiveAmount = 100;
+
+	data.balance = 300;
+
+	function calculateGoalProgress(goal) {
+		console.log(goal);
+
+		const currentMonth = new Date().getMonth();
+		
+		// get goal value
+		const goalValue = goal.value;
+
+		console.log(data.months[currentMonth]);
+
+		if (data.balance <= 0) {
+			return 0;
+		}
+
+		if (goal.type == 1) {
+			const goalAmount = goalValue * data.months[currentMonth].positiveAmount;
+			console.log(data.balance / goalAmount);
+			return data.balance / goalAmount;
+		}
+
+		if (data.balance >= goalValue) {
+			return 100;
+		}
+
+		return (data.balance / goalValue) * 100;
+	}
 </script>
 
 <div class="container">
@@ -174,7 +206,7 @@
 				{#each data.goals as goal}
 					<div class="font-bold">{goal.name}</div>
 					<div>{goal.description}</div>
-					<Progress value={50} max={100} />
+					<Progress value={calculateGoalProgress(goal)} max={100} />
 				{/each}
 			</CardContent>
 		</Card>
