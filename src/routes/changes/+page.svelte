@@ -1,8 +1,7 @@
 <script lang="ts">
-	export let changes = [
-		{ id: 1, description: 'Fallback change 1' },
-		{ id: 2, description: 'Fallback change 2' }
-	];
+	import type { PageData } from './$types';
+	export let data: PageData;
+	let changes = data.changes;
 </script>
 
 <svelte:head>
@@ -17,9 +16,9 @@
 	{#if changes.length === 0}
 		<p>No changes to display.</p>
 	{:else}
-		<ul class="list-disc list-inside">
+		<ul class="list-inside">
 			{#each changes as change}
-				<li class="mb-2">{change.description}</li>
+				<li class="mb-2">{change.typeId} {change.amount} {change.frequency}</li>
 			{/each}
 		</ul>
 	{/if}

@@ -20,14 +20,12 @@ async function seedChangeTypes() {
 			}
 
 			for (const record of records) {
-				await prisma.changeType.upsert({
-					where: { name: record.name },
-					update: {},
-					create: {
-						emoji: record.emoji,
-						name: record.name,
-						dir: parseInt(record.dir, 10)
-					}
+				await prisma.changeType.create({
+					data: {
+                        emoji: record.emoji,
+                        name: record.name,
+                        dir: parseInt(record.dir)
+                    }
 				});
 			}
 		}
@@ -50,16 +48,14 @@ async function seedChanges() {
 			}
 
 			for (const record of records) {
-				await prisma.change.upsert({
-					where: { id: parseInt(record.id, 10) },
-					update: {},
-					create: {
-						typeId: parseInt(record.typeId, 10),
-						frequency: parseInt(record.frequency, 10),
-						amount: parseInt(record.amount, 10),
-						from: new Date(record.from),
-						to: new Date(record.to)
-					}
+				await prisma.change.create({
+					data: {
+                        typeId: parseInt(record.typeId, 10),
+                        frequency: parseInt(record.frequency, 10),
+                        amount: parseFloat(record.amount),
+                        from: record.from,
+                        to: record.to
+                    }
 				});
 			}
 		}
@@ -82,16 +78,15 @@ async function seedGoals() {
 			}
 
 			for (const record of records) {
-				await prisma.goal.upsert({
-					where: { name: record.name },
-					update: {},
-					create: {
-						type: parseInt(record.type, 10),
-						value: parseFloat(record.value),
-						name: record.name,
-						description: record.description,
-						changeTypeId: record.changeTypeId ? parseInt(record.changeTypeId, 10) : null
-					}
+				await prisma.goal.create({
+					data: {
+                        //type,value,name,description,changeTypeId
+                        type: parseInt(record.type),
+                        value: parseFloat(record.value),
+                        name: record.name,
+                        description: record.description,
+                        changeTypeId: parseInt(record.changeTypeId, 10)    
+                    }
 				});
 			}
 		}
@@ -99,7 +94,7 @@ async function seedGoals() {
 }
 
 async function main() {
-	await seedChangeTypes();
+	await seedChangeTypes();    
 	await seedChanges();
 	await seedGoals();
 }
