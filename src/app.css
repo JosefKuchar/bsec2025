@@ -71,9 +71,15 @@
 @layer base {
   * {
     @apply border-border;
+    font-family: "Poppins", sans-serif;
   }
 
   body {
     @apply bg-background text-foreground;
   }
+
+  .page-bg {
+    background: linear-gradient(180deg, rgba(11,50,100,0.85) 0%, rgba(11,50,100,1) 100%);
+  }
+
 }
