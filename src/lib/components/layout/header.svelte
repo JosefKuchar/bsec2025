@@ -2,7 +2,7 @@
     import Profile from '$lib/components/icons/profile.svelte';
     import Logo from '$lib/components/icons/logo.svelte';
 </script>
-<nav class="container grid grid-cols-12 items-center py-[20px] justify-center">
+<nav class="container grid grid-cols-12 items-center pt-[20px] pb-[50px] justify-center">
     <div class="col-span-3 flex justify-start">
         <a href="/"><Logo /></a>
     </div>
