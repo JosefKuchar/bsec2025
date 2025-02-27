@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const formSchema = z.object({
+export const goalSchema = z.object({
   id: z.number().int().positive().optional(), // Optional because it's auto-generated
   type: z.number().int(), // Assuming type is an integer
   value: z.number(), // Assuming value is a float
@@ -9,4 +9,4 @@ export const formSchema = z.object({
   changeTypeId: z.number().int().positive().optional(), // Optional because it's a relation and can be null
 });
 
-export type FormSchema = typeof formSchema;
+export type GoalSchema = typeof goalSchema;
