@@ -1,29 +1,29 @@
-import type { PageServerLoad } from './$types';
+import type { PageServerLoad, Actions } from "./$types";
 import { superValidate } from "sveltekit-superforms";
-import { formSchema } from "./form-schema";
+import { goalSchema } from "./form-schema";
 import { zod } from "sveltekit-superforms/adapters";
+import { fail } from "@sveltejs/kit";
+import prisma from "$lib/prisma";
 
 export const load: PageServerLoad = async () => {
-	// Mocked payment data
-	const goals = [
-		{
-			id: 'payment-1',
-			name: 'Payment 1',
-            description: 'This is the first payment',
-            type: 'percentage',
-            value: 50
-		},
-		{
-			id: 'payment-2',
-			name: 'Payment 2',
-            description: 'This is the second payment',
-            type: 'amount',
-            value: 100
-		}
-	];
+	const goals = await prisma.goal.findMany();
 
 	return {
 		goals,
-		form: await superValidate(zod(formSchema))
+		form: await superValidate(zod(goalSchema))
 	};
 };
+
+export const actions: Actions = {
+	default: async (event) => {
+	  const form = await superValidate(event, zod(goalSchema));
+	  if (!form.valid) {
+		return fail(400, {
+		  form,
+		});
+	  }
+	  return {
+		form,
+	  };
+	},
+  };
