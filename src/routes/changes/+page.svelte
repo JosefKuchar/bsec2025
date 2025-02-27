@@ -1,11 +1,7 @@
 <script lang="ts">
-	// You'll fetch your data here and assign it to a variable, e.g., 'changes'
-	// let changes: any[] = []; // Replace 'any[]' with the correct type for your data
-
-	// Example data (remove this when you fetch your real data)
-	let changes = [
-		{ id: 1, description: 'Change 1' },
-		{ id: 2, description: 'Change 2' }
+	export let changes = [
+		{ id: 1, description: 'Fallback change 1' },
+		{ id: 2, description: 'Fallback change 2' }
 	];
 </script>
 
