@@ -23,12 +23,31 @@
     <DropdownMenu.Content>
      <DropdownMenu.Group>
       <DropdownMenu.GroupHeading>Actions</DropdownMenu.GroupHeading>
-      <DropdownMenu.Item onclick={() => navigator.clipboard.writeText(id)}>
-       Copy payment ID
+      <DropdownMenu.Item on:click={() => navigator.clipboard.writeText(id)}>
+       Copy ID
+      </DropdownMenu.Item>
+      <DropdownMenu.Item 
+        on:click={async () => {
+          try {
+            const response = await fetch('/api/goals/delete', {
+              method: 'DELETE',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ id })
+            });
+            
+            if (!response.ok) throw new Error('Delete failed');
+            window.location.reload();
+          } catch (error) {
+            console.error('Delete error:', error);
+            alert('Failed to delete goal');
+          }
+        }}
+      >
+       Delete
       </DropdownMenu.Item>
      </DropdownMenu.Group>
      <DropdownMenu.Separator />
-     <DropdownMenu.Item>View customer</DropdownMenu.Item>
-     <DropdownMenu.Item>View payment details</DropdownMenu.Item>
+     <DropdownMenu.Item on:click={() => alert('View customer - Not implemented')}>View customer</DropdownMenu.Item>
+     <DropdownMenu.Item on:click={() => alert('View payment details - Not implemented')}>View payment details</DropdownMenu.Item>
     </DropdownMenu.Content>
    </DropdownMenu.Root>
