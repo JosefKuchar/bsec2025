@@ -4,12 +4,33 @@ import type { PageServerLoad } from './$types';
 import { getFrequencyString } from '$lib/utils';
 
 export const load = (async () => {
-	const changes = await prisma.change.findMany();
+	const changes = await prisma.change.findMany({
+		select: {
+			id: true,
+			from: true,
+			to: true,
+			frequency: true,
+			type: {
+				select: {
+					id: true,
+					emoji: true,
+					name: true
+				}
+			}
+		}
+	});
 
-	return { changes: changes.map((change) => ({
-		...change,
-		frequency: getFrequencyString(change.frequency),
-		from : moment(change.from).format('DD.MM.YYYY'),
-		to : moment(change.to).format('DD.MM.YYYY'),
-	}))};
+	return {
+		changes: changes.map((change) => ({
+			id: change.id,
+			from: moment(change.from).format('DD.MM.YYYY'),
+			to: moment(change.to).format('DD.MM.YYYY'),
+			frequency: getFrequencyString(change.frequency),
+			type: {
+				id: change.type.id,
+				emoji: change.type.emoji,
+				name: change.type.name
+			},
+		}))
+	};
 }) satisfies PageServerLoad;
