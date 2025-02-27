@@ -9,6 +9,7 @@
 	import CardContent from '$lib/components/ui/card/card-content.svelte';
 	import CardHeader from '$lib/components/ui/card/card-header.svelte';
 	import CardTitle from '$lib/components/ui/card/card-title.svelte';
+	import Button from '$lib/components/ui/button/button.svelte';
 
 	const handleCreateRandom = async () => {
 		await fetch('/api/change/create-random', {
@@ -33,7 +34,7 @@
 			<CardTitle>Pohyby</CardTitle>
 		</CardHeader>
 		<CardContent>
-			<button onclick={handleCreateRandom} class="mb-4">Vytvořit náhodný pohyb</button>
+			<Button onclick={handleCreateRandom} class="mb-4">Vytvořit náhodný pohyb</Button>
 			{#if changes.length === 0}
 				<p>No changes to display.</p>
 			{:else}
