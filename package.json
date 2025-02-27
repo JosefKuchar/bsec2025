@@ -14,7 +14,7 @@
 		"lint": "prettier --check . && eslint ."
 	},
 	"prisma": {
-  		"seed": "tsx prisma/seed.ts"
+		"seed": "tsx prisma/seed.ts"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.5",
@@ -52,10 +52,12 @@
 		"@prisma/client": "^6.4.1",
 		"@tailwindcss/vite": "^4.0.8",
 		"@tanstack/table-core": "^8.21.2",
+		"@types/moment": "^2.11.29",
 		"csv-parse": "^5.6.0",
 		"d3-array": "^3.2.4",
 		"d3-scale": "^4.0.2",
 		"d3-scale-chromatic": "^3.1.0",
-		"layerchart": "^1.0.0"
+		"layerchart": "^1.0.0",
+		"moment": "^2.30.1"
 	}
 }
