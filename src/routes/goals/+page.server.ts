@@ -2,22 +2,24 @@ import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
 	// Mocked payment data
-	const payments = [
+	const goals = [
 		{
 			id: 'payment-1',
-			amount: 100,
-			date: '2024-03-08',
-			description: 'Payment for service'
+			name: 'Payment 1',
+            description: 'This is the first payment',
+            type: 'percentage',
+            value: 50
 		},
 		{
 			id: 'payment-2',
-			amount: 50,
-			date: '2024-03-07',
-			description: 'Another payment'
+			name: 'Payment 2',
+            description: 'This is the second payment',
+            type: 'amount',
+            value: 100
 		}
 	];
 
 	return {
-		payments
+		goals
 	};
 };
