@@ -222,7 +222,7 @@
 								}).format(data.balance)}
 								textAnchor="middle"
 								verticalAnchor="middle"
-								class="text-4xl"
+								class="text-3xl"
 								dy={4}
 							/>
 							<Text
