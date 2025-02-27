@@ -7,6 +7,7 @@
 	import CardTitle from '$lib/components/ui/card/card-title.svelte';
 	import Card from '$lib/components/ui/card/card.svelte';
 	import { PieChart, Text } from 'layerchart';
+	import { schemeTableau10 } from 'd3-scale-chromatic';
 
 	const data = [
 		{
@@ -94,7 +95,15 @@
 </table>
 
 <div class="h-[300px] resize overflow-auto rounded border p-4">
-	<PieChart {data} key="fruit" value="value" innerRadius={-20} cornerRadius={5} padAngle={0.02}>
+	<PieChart
+		{data}
+		cRange={schemeTableau10}
+		key="fruit"
+		value="value"
+		innerRadius={-20}
+		cornerRadius={5}
+		padAngle={0.02}
+	>
 		<svelte:fragment slot="aboveMarks">
 			<Text value={123} textAnchor="middle" verticalAnchor="middle" class="text-4xl" dy={4} />
 			<Text

@@ -31,6 +31,10 @@
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    --color-surface-100: 180 100% 100%;
+    --color-surface-200: 0 0% 94.902%;
+    --color-surface-300: 180 1.9608% 90%;
+    --color-surface-content: 215 27.907% 16.8627%;
   }
 
   .dark {
