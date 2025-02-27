@@ -16,14 +16,11 @@
 <div class="container space-y-4 pb-[40px]">
 	<Dialog.Root>
 		<Dialog.Trigger>
-			<Button>+ New Goal</Button>
+			<Button>+ Nový cíl</Button>
 		</Dialog.Trigger>
 		<Dialog.Content>
 			<Dialog.Header>
-				<Dialog.Title class="text-xl font-bold">New Goal</Dialog.Title>
-				<Dialog.Description class="text-gray-500">
-					Create a new goal to track your progress. Fill out the form below to get started.
-				</Dialog.Description>
+				<Dialog.Title class="text-xl font-bold">Nový cíl</Dialog.Title>
 			</Dialog.Header>
 
 			<!-- Include the GoalForm component here -->
