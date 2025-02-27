@@ -95,35 +95,48 @@
 			data
 		};
 	});
+	let dialogOpen = false;
 	let wheel = null;
-	onMount(() => {
-		const props = {
-			items: [
-				{ label: 'Dárkový poukaz 500 Kč' },
-				{ label: 'Sleva 20 % na další nákup' },
-				{ label: 'Zdarma doprava' },
-				{ label: 'Hrnek s logem' },
-				{ label: 'Bonusové body do věrnostního programu' },
-				{ label: 'Tajemná krabička s překvapením' },
-				{ label: 'Tričko s potiskem' },
-				{ label: 'Sleva 50 % na vybraný produkt' }
-			],
-			radius: 1
-		};
+	
+	const wheelItems = [
+		{ label: 'Dárkový poukaz 500 Kč' },
+		{ label: 'Sleva 20 % na další nákup' },
+		{ label: 'Zdarma doprava' },
+		{ label: 'Hrnek s logem' },
+		{ label: 'Bonusové body do věrnostního programu' },
+		{ label: 'Tajemná krabička s překvapením' },
+		{ label: 'Tričko s potiskem' },
+		{ label: 'Sleva 50 % na vybraný produkt' }
+	];
 
-		// 2. Decide where you want it to go:
-		const container = document.querySelector('.wheel-container');
+	function openDialog() {
+		dialogOpen = true;
+		setTimeout(initWheel, 100);
+	}
+	
+	function initWheel() {
+		if (!wheel) {
+			const props = {
+				items: wheelItems,
+				radius: 1
+			};
 
-		// 3. Create the wheel in the container and initialise it with the props:
-		wheel = new Wheel(container, props);
-
-		wheel.isInteractive = false;
-		wheel.spinToItem(0, 4000);
-	});
+			const container = document.querySelector('.wheel-container');
+			
+			if (container) {
+				wheel = new Wheel(container, props);
+				wheel.isInteractive = false;
+			}
+		}
+	}
 
 	const spinWheel = () => {
-		wheel.spinToItem(1, 4000, true, 10);
-	};
+		if (wheel) {
+			const randomIndex = Math.floor(Math.random() * wheelItems.length);
+			const rotations = 2 + Math.floor(Math.random() * 3);
+			wheel.spinToItem(randomIndex, 4000, true, rotations);
+		}
+	};		
 
 	console.log(data.months[2]);
 	data.months[1].positiveAmount = 100;
@@ -157,7 +170,6 @@
 		return (data.balance / goalValue) * 100;
 	}
 
-	let spinnedToday = false;
 </script>
 
 <div class="container">
@@ -255,11 +267,14 @@
 			</CardContent>
 		</Card>
 
-
-		<Dialog open={true}>
-		<DialogContent>
-			<div class="wheel-container h-[600px] w-[600px]" onclick={spinWheel}></div>
-		</DialogContent>
+		<Button onclick={openDialog}>Otevřít kolo štěstí</Button>
+		<Dialog bind:open={dialogOpen}>
+			<DialogContent>
+				<div class="wheel-container h-[450px] w-full"></div>
+				<div class="mt-4 flex justify-center">
+					<Button onclick={spinWheel}>Roztočit</Button>
+				</div>
+			</DialogContent>
 		</Dialog>
 	</div>
 </div>
