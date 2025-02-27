@@ -1,7 +1,6 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import prisma from '$lib/prisma';
-import { startOfMonth, endOfMonth } from 'date-fns';
 
 interface CategorySummary {
   id: number;
@@ -85,8 +84,6 @@ export const GET: RequestHandler = async ({ url }) => {
     
     const year = parseInt(yearParam);
     const month = parseInt(monthParam);
-    console.log(year);
-    console.log(month);
     
     if (isNaN(year) || isNaN(month)) {
       return new Response(
