@@ -48,7 +48,11 @@
               >
                 {#each row.getVisibleCells() as cell (cell.id)}
                   <Table.Cell class="px-4 py-3">
-                    <FlexRender content={cell.column.columnDef.cell} context={cell.getContext()} />
+                    {#if cell.column.id === 'type'}
+                      {mapTypeValue(cell.getValue() as number)}
+                    {:else}
+                      <FlexRender content={cell.column.columnDef.cell} context={cell.getContext()} />
+                    {/if}
                   </Table.Cell>
                 {/each}
               </Table.Row>
