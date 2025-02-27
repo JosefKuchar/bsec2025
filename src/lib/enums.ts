@@ -8,11 +8,3 @@ export enum GoalType {
     CATEGORY_GT = 2,
     CATEGORY_LT = 3
 }
-
-export enum Frequency {
-    OneTime = 1,
-    Daily = 2,
-    Weekly = 3,
-    Monthly = 4,
-    Yearly = 5,
-}

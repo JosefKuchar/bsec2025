@@ -1,21 +1,22 @@
 <script lang="ts">
 	import * as Form from '$lib/components/ui/form/index.js';
 	import * as RadioGroup from '$lib/components/ui/radio-group/index.js';
+	import * as Select from '$lib/components/ui/select/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { formSchema as formSchema, type ChangeFormSchema } from './form-schema';
 	import { type SuperValidated, type Infer, superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import { createEventDispatcher } from 'svelte';
-	import { Frequency } from '$lib/enums';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
-  import { getfrequencyFromString } from '$lib/utils';
 	import prisma from '$lib/prisma';
+	import { goto, invalidateAll } from '$app/navigation';
 
 	const dispatch = createEventDispatcher();
 
 	let {
 		data,
-		change
+		change,
+		types
 	}: {
 		data: { form: SuperValidated<Infer<ChangeFormSchema>> };
 		change: {
@@ -23,10 +24,15 @@
 			from: Date;
 			to: Date;
 			amount: number;
-			frequency: string;
-			type: { id: number; emoji: string; name: string };
+			type: {
+				id: number;
+				emoji: string;
+				name: string;
+			};
 		};
+		types: { id: number; emoji: string; name: string }[];
 	} = $props();
+	console.log('form change', change);
 
 	const form = superForm(data.form, {
 		validators: zodClient(formSchema),
@@ -41,54 +47,65 @@
 	const { form: formData, enhance } = form;
 </script>
 
-<form method="POST" use:enhance>
+<form
+	method="POST"
+	onsubmit={(event) => {
+		event.preventDefault();
+
+		let type = types.find((type) => type.name === $formData.typeName);
+		console.log('type', type);
+		let body = JSON.stringify({
+			id: change.id,
+			from: change.from,
+			to: change.to,
+			amount: $formData.amount,
+			type: type
+		});
+
+		console.log('post body', body);
+
+		try {
+			fetch('/api/change/edit', {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: body
+			}).then(() => {
+				invalidateAll();
+			});
+		} catch (error) {
+			console.error(error);
+		}
+	}}
+	use:enhance
+>
+	<Select.Root type="single" bind:value={$formData.typeName} name={'type'}>
+		<Select.Trigger>
+			{console.log('select trigger', $formData.typeName)}
+			{$formData.typeName ? $formData.typeName : 'Vyberte si typ pohybu na účtu'}
+		</Select.Trigger>
+		<Select.Content>
+			{#each types as type}
+				<Select.Item value={type.name} label={type.name} />
+			{/each}
+		</Select.Content>
+	</Select.Root>
+
 	<Form.Field {form} name="amount">
 		<Form.Control>
 			{#snippet children({ props })}
 				<Form.Label>Amount</Form.Label>
-				<Input {...props} bind:value={$formData.amount} />
+				<Input
+					{...props}
+					bind:value={$formData.amount}
+					type="number"
+					oninput={() => ($formData.amount = Number($formData.amount))}
+				/>
 			{/snippet}
 		</Form.Control>
-		<Form.Description>Amount desc</Form.Description>
 		<Form.FieldErrors />
 	</Form.Field>
-
-	<Form.Fieldset {form} name="frequency" class="space-y-3">
-    <Form.Legend>Frequency</Form.Legend>
-    <RadioGroup.Root
-      bind:value={$formData.frequency}
-      class="flex flex-col space-y-1"
-      name="type"
-    >
-      <div class="flex items-center space-x-3 space-y-0">
-        <Form.Control>
-          {#snippet children({ props })}
-            <RadioGroup.Item value="OneTime" {...props} />
-            <Form.Label class="font-normal">Jednorazove</Form.Label>
-          {/snippet}
-        </Form.Control>
-      </div>
-      <div class="flex items-center space-x-3 space-y-0">
-        <Form.Control>
-          {#snippet children({ props })}
-            <RadioGroup.Item value="mentions" {...props} />
-            <Form.Label class="font-normal"
-              >Direction messages and mentions</Form.Label
-            >
-          {/snippet}
-        </Form.Control>
-      </div>
-      <div class="flex items-center space-x-3 space-y-0">
-        <Form.Control>
-          {#snippet children({ props })}
-            <RadioGroup.Item value="none" {...props} />
-            <Form.Label class="font-normal">Nothing</Form.Label>
-          {/snippet}
-        </Form.Control>
-      </div>
-    </RadioGroup.Root>
-    <Form.FieldErrors />
-  </Form.Fieldset>
 
 	<Form.Button>Submit</Form.Button>
 </form>

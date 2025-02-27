@@ -2,8 +2,8 @@
 	import type { PageData } from './$types';
 	export let data: PageData;
 	let changes = data.changes;
+	let types = data.types;
 	import ChangeModal from '$lib/components/ui/change_modal/ChangeModal.svelte';
-	console.debug(changes);
 </script>
 
 <svelte:head>
@@ -19,12 +19,12 @@
 		<p>No changes to display.</p>
 	{:else}
 		<ul class="list-inside">
-			{#each changes as change, index}
+			{#each changes as change}
 				<li
 					class="mb-2 rounded-lg border shadow-sm transition-shadow duration-200 hover:shadow-md"
 				>
 					<div>
-						<ChangeModal {change} />
+						<ChangeModal {change} {types}/>
 					</div>
 				</li>
 			{/each}
