@@ -156,6 +156,8 @@
 
 		return (data.balance / goalValue) * 100;
 	}
+
+	let spinnedToday = false;
 </script>
 
 <div class="container">
@@ -252,11 +254,12 @@
 				</table>
 			</CardContent>
 		</Card>
-		<!-- <Dialog open={true}> -->
-		<!-- <DialogContent> -->
-		<div class="wheel-container h-[600px] w-[600px]" onclick={spinWheel}></div>
 
-		<!-- </DialogContent> -->
-		<!-- </Dialog> -->
+
+		<Dialog open={true}>
+		<DialogContent>
+			<div class="wheel-container h-[600px] w-[600px]" onclick={spinWheel}></div>
+		</DialogContent>
+		</Dialog>
 	</div>
 </div>
