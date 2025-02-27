@@ -1,8 +1,11 @@
 ChangeType,id,emoji,name,dir
 ChangeType,1,💰,Income,1
 ChangeType,2,🛒,Expense,2
+ChangeType,3,🎁,Gift,1
 Change,id,typeId,frequency,amount,from,to
 Change,1,1,0,1000,2024-01-01T00:00:00Z,2024-01-01T00:00:00Z
 Change,2,2,0,500,2024-01-01T00:00:00Z,2024-01-01T00:00:00Z
+Change,3,1,0,200,2024-02-15T00:00:00Z,2024-02-15T00:00:00Z
+Change,4,3,0,100,2024-03-01T00:00:00Z,2024-03-01T00:00:00Z
 Goal,id,type,value,name,description,changeTypeId
 Goal,1,1,0.1,"Save 10%", "Save 10% of income",1
