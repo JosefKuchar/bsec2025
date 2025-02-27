@@ -4,7 +4,7 @@
 	let { children } = $props();
 </script>
 
-<section class="page-bg h-screen">
+<section class="page-bg h-full">
 	<Header />
 	{@render children()}
 </section>
