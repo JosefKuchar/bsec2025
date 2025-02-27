@@ -3,7 +3,10 @@ import prisma from '$lib/prisma';
 
 export const PUT: RequestHandler = async ({ request }) => {
     const data = await request.json();
-    const { id, name, description } = data;
+    const { id, name, description, amount } = data;
+
+    // convert amount from string to float
+    const value = parseFloat(amount);
 
     if (!id) {
         return new Response(JSON.stringify({ error: 'ID is required' }), { status: 400 });
@@ -13,7 +16,7 @@ export const PUT: RequestHandler = async ({ request }) => {
         // Update the goal in the database
         const updatedGoal = await prisma.goal.update({
             where: { id: Number(id) }, // Ensure ID is properly formatted
-            data: { name, description }
+            data: { name, description, value }
         });
 
         return new Response(JSON.stringify(updatedGoal), { 
