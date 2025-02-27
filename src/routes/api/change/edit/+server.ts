@@ -3,6 +3,7 @@ import type { RequestHandler } from './$types';
 
 export const PUT: RequestHandler = async (event) => {
 	const data = await event.request.json();
+	console.log(data);
 	await prisma.change.update({
 		where: {
             id: data.id
