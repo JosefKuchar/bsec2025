@@ -61,7 +61,7 @@
 						<div class="m-[2px] h-7 w-7 rounded bg-green-500"></div>
 					</td>
 					<td>
-						<div class="m-[2px] h-7 w-7 rounded bg-green-500"></div>
+						<div class="m-[2px] h-7 w-7 rounded bg-gray-500"></div>
 					</td>
 					<td>
 						<div class="m-[2px] h-7 w-7 rounded bg-green-500"></div>
@@ -93,9 +93,15 @@
 				padAngle={0.02}
 			>
 				<svelte:fragment slot="aboveMarks">
-					<Text value={123} textAnchor="middle" verticalAnchor="middle" class="text-4xl" dy={4} />
 					<Text
-						value="total"
+						value="10 000 Kč"
+						textAnchor="middle"
+						verticalAnchor="middle"
+						class="text-4xl"
+						dy={4}
+					/>
+					<Text
+						value="Celkový stav účtu"
 						textAnchor="middle"
 						verticalAnchor="middle"
 						class="fill-surface-content/50 text-sm"
