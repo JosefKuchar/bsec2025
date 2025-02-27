@@ -22,12 +22,15 @@ export const actions: Actions = {
       return fail(400, { form });
     }
 
+	console.log('Action')
+	console.log(form.data);
+
     // Save the new goal to the database
     try {
       const newGoal = await prisma.goal.create({
         data: {
-          type: form.data.type,
-          value: form.data.value,
+          type: Number(form.data.type),
+          value: Number(form.data.value),
           name: form.data.name,
           description: form.data.description,
           changeTypeId: form.data.changeTypeId || null, // Handle optional changeTypeId

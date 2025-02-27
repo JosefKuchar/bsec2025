@@ -10,12 +10,12 @@
      columns: ColumnDef<TData, TValue>[];
     };
 
-    function mapTypeValue(value: number): string {
+    function mapTypeValue(value: number): string | number {
       switch(value) {
         case 0: return 'Percentage';
         case 1: return 'Abs';
         case 2: return 'Difference';
-        default: return value.toString();
+        default: return value;
       }
     }
 
