@@ -34,7 +34,43 @@
 		}
 	];
 
-	console.log(data);
+	function streakToColor(streak: number) {
+		if (streak < 5) {
+			return 'text-black';
+		} else if (streak < 10) {
+			return 'text-blue-500';
+		} else {
+			return 'text-yellow-500';
+		}
+	}
+
+	const years = [2024, 2025].map((year) => {
+		return {
+			year,
+			months: Array(12)
+				.fill(0)
+				.map((_, i) => i + 1)
+		};
+	});
+
+	const goalsLongterm = data.goals.map((goal) => {
+		const streak = Math.floor(Math.random() * 15);
+		const color = streakToColor(streak);
+
+		let data = [];
+		for (let i = 0; i < 24; i++) {
+			data.push(Math.random() < 0.5);
+		}
+
+		return {
+			name: goal.name,
+			streak,
+			color,
+			data
+		};
+	});
+
+	console.log(goalsLongterm);
 </script>
 
 <div class="container">
@@ -95,40 +131,35 @@
 					<thead>
 						<tr>
 							<th></th>
-							<th colspan="3">2024</th>
+							<th></th>
+							{#each years as year}
+								<th colspan={year.months.length}><div class="m-1 border-b-2">{year.year}</div></th>
+							{/each}
 						</tr>
 						<tr>
 							<th>Cíl</th>
-							<th>1</th>
-							<th>2</th>
-							<th>3</th>
+							<th></th>
+							{#each years as year}
+								{#each year.months as month}
+									<th class="font-normal">{month}</th>
+								{/each}
+							{/each}
 						</tr>
 					</thead>
 					<tbody>
-						<tr class="table-row">
-							<td><div class="mr-5">Nejaky goal</div></td>
-							<td>
-								<div class="m-[2px] h-7 w-7 rounded bg-green-500"></div>
-							</td>
-							<td>
-								<div class="m-[2px] h-7 w-7 rounded bg-gray-500"></div>
-							</td>
-							<td>
-								<div class="m-[2px] h-7 w-7 rounded bg-green-500"></div>
-							</td>
-						</tr>
-						<tr class="table-row">
-							<td><div class="mr-5">Nejaky goal bracho</div></td>
-							<td>
-								<div class="m-[2px] h-7 w-7 rounded bg-green-500"></div>
-							</td>
-							<td>
-								<div class="m-[2px] h-7 w-7 rounded bg-green-500"></div>
-							</td>
-							<td>
-								<div class="m-[2px] h-7 w-7 rounded bg-green-500"></div>
-							</td>
-						</tr>
+						{#each goalsLongterm as goal}
+							<tr class="table-row">
+								<td><div class="mr-5">{goal.name}</div></td>
+								<td><div class="font-streak mr-2 text-right {goal.color}">x{goal.streak}</div></td>
+								{#each goal.data as data}
+									<td>
+										<div
+											class="m-[2px] h-7 w-7 rounded {data ? 'bg-green-500' : 'bg-gray-200'}"
+										></div>
+									</td>
+								{/each}
+							</tr>
+						{/each}
 					</tbody>
 				</table>
 			</CardContent>
