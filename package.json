@@ -47,6 +47,7 @@
 		"@tanstack/table-core": "^8.21.2",
 		"d3-array": "^3.2.4",
 		"d3-scale": "^4.0.2",
+		"d3-scale-chromatic": "^3.1.0",
 		"layerchart": "^1.0.0",
 		"csv-parse": "^5.6.0"
 	}

@@ -31,6 +31,10 @@
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    --color-surface-100: 180 100% 100%;
+    --color-surface-200: 0 0% 94.902%;
+    --color-surface-300: 180 1.9608% 90%;
+    --color-surface-content: 215 27.907% 16.8627%;
   }
 
   .dark {
@@ -76,6 +80,19 @@
 
   .page-bg {
     background: linear-gradient(180deg, rgba(11,50,100,0.85) 0%, rgba(11,50,100,1) 100%);
+  }
+
+  .underline-link {
+    @apply relative;
+  }
+
+  .underline-link::after {
+    content: "";
+    @apply absolute bottom-[-2px] left-[0px] w-0 h-[2px] bg-link-primary transition-all duration-300 ease-in-out;
+  }
+
+  .underline-link:hover::after {
+    @apply w-full;
   }
 
 }
