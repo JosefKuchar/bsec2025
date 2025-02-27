@@ -32,6 +32,7 @@
 		};
 		types: { id: number; emoji: string; name: string }[];
 	} = $props();
+	console.log('form change', change);
 
 	const form = superForm(data.form, {
 		validators: zodClient(formSchema),
@@ -51,7 +52,8 @@
 	onsubmit={(event) => {
 		event.preventDefault();
 
-		let type = types.find((type) => type.name === $formData.type);
+		let type = types.find((type) => type.name === $formData.typeName);
+		console.log('type', type);
 		let body = JSON.stringify({
 			id: change.id,
 			from: change.from,
@@ -60,7 +62,7 @@
 			type: type
 		});
 
-		console.log(body);
+		console.log('post body', body);
 
 		try {
 			fetch('/api/change/edit', {
@@ -70,18 +72,18 @@
 				},
 				body: body
 			}).then(() => {
-				goto('/changes');
+				invalidateAll();
 			});
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 		}
-		console.log($formData);
 	}}
 	use:enhance
 >
-	<Select.Root type="single" bind:value={$formData.type} name={'type'}>
+	<Select.Root type="single" bind:value={$formData.typeName} name={'type'}>
 		<Select.Trigger>
-			{$formData.type ? $formData.type.name : 'Vyberte si typ pohybu na účtu'}
+			{console.log('select trigger', $formData.typeName)}
+			{$formData.typeName ? $formData.typeName : 'Vyberte si typ pohybu na účtu'}
 		</Select.Trigger>
 		<Select.Content>
 			{#each types as type}

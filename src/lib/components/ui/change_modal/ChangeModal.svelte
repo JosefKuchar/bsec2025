@@ -4,13 +4,7 @@
 	const { change, types } = $props();
 	const id = change.id;
 	const desc = change.type.emoji + ' ' + change.type.name;
-<<<<<<< HEAD
-	const date =
-		new Date(change.from).toLocaleString() + ' - ' + new Date(change.to).toLocaleString();
-	// console.debug(freq);
-=======
 	const date = new Date(change.from).toLocaleString();
->>>>>>> a6bbd0e (edit change)
 </script>
 
 <Dialog.Root>
@@ -24,6 +18,7 @@
 		<Dialog.Header>
 			<Dialog.Title>Upravit pohyb účtu</Dialog.Title>
 		</Dialog.Header>
+		{console.log('modal', change)}
 		<ChangeForm data={{ form: change }} {change} {types} />
 	</Dialog.Content>
 </Dialog.Root>
