@@ -1,5 +1,6 @@
 import prisma from '$lib/prisma';
 import type { PageServerLoad } from './$types';
+import { startOfToday } from 'date-fns';
 
 interface CategorySummary {
 	id: number;
@@ -69,6 +70,26 @@ async function calculateOneTimePayments(year: number, month: number): Promise<Pa
 	};
 }
 
+const getCurrentBalance = async () => {
+	const today = startOfToday();
+	const changes = await prisma.change.findMany({
+		where: {
+			from: {
+				lte: today
+			}
+		},
+		include: {
+			type: true
+		}
+	});
+
+	let balance = 0;
+	for (const change of changes) {
+		balance += change.type.dir === 1 ? change.amount : -change.amount;
+	}
+	return balance;
+};
+
 export const load = (async () => {
 	const goals = await prisma.goal.findMany();
 
@@ -82,6 +103,7 @@ export const load = (async () => {
 
 	return {
 		goals,
-		months
+		months,
+		balance: await getCurrentBalance()
 	};
 }) satisfies PageServerLoad;
