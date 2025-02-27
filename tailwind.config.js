@@ -21,14 +21,13 @@ const config = {
 			colors: {
 				white: "#fff",
 				black: "#000",
+				blue: "#3F89CC",
+				red: "#D21B17",
 				border: "hsl(var(--border) / <alpha-value>)",
 				input: "hsl(var(--input) / <alpha-value>)",
 				ring: "hsl(var(--ring) / <alpha-value>)",
 				background: "hsl(var(--background) / <alpha-value>)",
 				foreground: "hsl(var(--foreground) / <alpha-value>)",
-				link: {
-					primary: "#007BFF"
-				},
 				primary: {
 					DEFAULT: "hsl(var(--primary) / <alpha-value>)",
 					foreground: "hsl(var(--primary-foreground) / <alpha-value>)"

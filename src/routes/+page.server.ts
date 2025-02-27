@@ -92,13 +92,12 @@ const getCurrentBalance = async () => {
 
 export const load = (async () => {
 	const goals = await prisma.goal.findMany();
+	const year = 2025;
 
 	let months = [];
-	for (let year = 2023; year <= 2024; year++) {
-		for (let month = 1; month <= 12; month++) {
-			const payments = await calculateOneTimePayments(year, month);
-			months.push(payments);
-		}
+	for (let month = 1; month <= 12; month++) {
+		const payments = await calculateOneTimePayments(year, month);
+		months.push(payments);
 	}
 
 	return {
