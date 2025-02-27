@@ -24,12 +24,12 @@ export const GET: RequestHandler = async ({ url }) => {
       }
     });
 
-    let balance = 0;
+    let monthlyBalance = 0;
     for (const change of changes) {
-      balance += change.type.dir === 1 ? change.amount : -change.amount;
+      monthlyBalance += change.type.dir === 1 ? change.amount : -change.amount;
     }
 
-    return json({ balance });
+    return json({ monthlyBalance });
   } catch (error) {
     console.error('Error calculating balance:', error);
     return json(

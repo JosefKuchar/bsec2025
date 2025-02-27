@@ -11,7 +11,6 @@
             <a href="/" class="underline-link text-[16px] text-blue font-bold">Dashboard</a>
             <a href="/changes" class="underline-link text-[16px] text-blue font-bold">Zmeny</a>
             <a href="/goals" class="underline-link text-[16px] text-blue font-bold">Ciele</a>
-            <a href="/achievements" class="underline-link text-[16px] text-blue font-bold">Achievements</a>
         </div>
     </div>
     <div class="col-span-3 flex justify-end">
