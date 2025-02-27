@@ -134,8 +134,15 @@
 		setTimeout(initWheel, 100);
 	}
 	
+	function handleDialogClose() {
+		dialogOpen = false;
+		destroyWheel();
+	}
+	
 	function initWheel() {
-		if (!wheel) {
+		const container = document.querySelector('.wheel-container');
+		
+		if (container) {
 			const props = {
 				items: wheelItems,
 				radius: 1,
@@ -149,13 +156,16 @@
     lineWidth: 1,
     lineColor: '#fff',
 			};
-
-			const container = document.querySelector('.wheel-container');
 			
-			if (container) {
-				wheel = new Wheel(container, props);
-				wheel.isInteractive = false;
-			}
+			wheel = new Wheel(container, props);
+			wheel.isInteractive = false;
+		}
+	}
+
+	function destroyWheel() {
+		if (wheel) {
+			wheel.destroy();
+			wheel = null;
 		}
 	}
 
@@ -221,7 +231,7 @@
 								}).format(data.balance)}
 								textAnchor="middle"
 								verticalAnchor="middle"
-								class="text-4xl"
+								class="text-3xl"
 								dy={4}
 							/>
 							<Text
@@ -291,7 +301,7 @@
 			</CardContent>
 		</Card>
 
-		<Button onclick={openDialog}>Otevřít kolo štěstí</Button>
+		<Button class="w-fit mb-[40px]" onclick={openDialog} onclose={handleDialogClose}>Otevřít kolo štěstí</Button>
 		<Dialog bind:open={dialogOpen}>
 			<DialogContent>
 				<div class="wheel-container h-[450px] w-full"></div>
