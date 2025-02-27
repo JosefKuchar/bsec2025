@@ -4,6 +4,9 @@
 	import { PieChart, Text } from 'layerchart';
 	import { schemeTableau10 } from 'd3-scale-chromatic';
 	import { Progress } from '$lib/components/ui/progress';
+	import { Wheel } from 'spin-wheel';
+	import { onMount } from 'svelte';
+	import { Dialog, DialogContent } from '$lib/components/ui/dialog';
 
 	export let data: any;
 
@@ -53,10 +56,20 @@
 		};
 	});
 
+	const months = data.months;
 	const goalsLongterm = data.goals.map((goal) => {
 		let data = [];
 		for (let i = 0; i < 24; i++) {
-			data.push(Math.random() < 0.8);
+			let cat = months[i].categories.find((category) => category.id === goal.changeTypeId);
+			if (cat) {
+				if (cat.amount > goal.value) {
+					data.push(true);
+				} else {
+					data.push(false);
+				}
+			} else {
+				data.push(false);
+			}
 		}
 
 		// Calculate max streak
@@ -82,6 +95,35 @@
 			data
 		};
 	});
+	let wheel = null;
+	onMount(() => {
+		const props = {
+			items: [
+				{ label: 'Dárkový poukaz 500 Kč' },
+				{ label: 'Sleva 20 % na další nákup' },
+				{ label: 'Zdarma doprava' },
+				{ label: 'Hrnek s logem' },
+				{ label: 'Bonusové body do věrnostního programu' },
+				{ label: 'Tajemná krabička s překvapením' },
+				{ label: 'Tričko s potiskem' },
+				{ label: 'Sleva 50 % na vybraný produkt' }
+			],
+			radius: 1
+		};
+
+		// 2. Decide where you want it to go:
+		const container = document.querySelector('.wheel-container');
+
+		// 3. Create the wheel in the container and initialise it with the props:
+		wheel = new Wheel(container, props);
+
+		wheel.isInteractive = false;
+		wheel.spinToItem(0, 4000);
+	});
+
+	const spinWheel = () => {
+		wheel.spinToItem(1, 4000, true, 10);
+	};
 
 	console.log(goalsLongterm);
 </script>
@@ -177,5 +219,11 @@
 				</table>
 			</CardContent>
 		</Card>
+		<!-- <Dialog open={true}> -->
+		<!-- <DialogContent> -->
+		<div class="wheel-container h-[600px] w-[600px]" onclick={spinWheel}></div>
+
+		<!-- </DialogContent> -->
+		<!-- </Dialog> -->
 	</div>
 </div>
