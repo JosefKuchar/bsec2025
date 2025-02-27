@@ -1,3 +1,4 @@
+import { json } from '@sveltejs/kit';
 import prisma from '$lib/prisma';
 import { startOfMonth, endOfMonth } from 'date-fns';
 
@@ -65,4 +66,27 @@ export async function calculateOneTimePayments(year: number, month: number): Pro
         netAmount: positiveAmount - negativeAmount,
         categories
     };
+}
+
+export async function GET({ url }) {
+    const yearParam = url.searchParams.get('year');
+    const monthParam = url.searchParams.get('month');
+    
+    if (!yearParam || !monthParam) {
+        return json({ error: 'Year and month parameters are required' }, { status: 400 });
+    }
+    
+    const year = parseInt(yearParam);
+    const month = parseInt(monthParam);
+    
+    if (isNaN(year) || isNaN(month) || month < 1 || month > 12) {
+        return json({ error: 'Invalid year or month parameter' }, { status: 400 });
+    }
+
+    try {
+        const summary = await calculateOneTimePayments(year, month);
+        return json(summary);
+    } catch (error) {
+        return json({ error: 'Failed to calculate payments' }, { status: 500 });
+    }
 }
