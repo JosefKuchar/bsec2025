@@ -16,6 +16,12 @@
 	import { createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher();
 
+	// Import the Form component
+	import Form from '$lib/components/ui/form/Form.svelte';
+	import Input from '$lib/components/ui/form/Input.svelte';
+	import Select from '$lib/components/ui/form/Select.svelte';
+	import Textarea from '$lib/components/ui/form/Textarea.svelte';
+
 	// Function to handle form submission
 	function handleSubmit(event: Event) {
 		event.preventDefault(); // Prevent default form submission
@@ -41,64 +47,20 @@
 	}
 </script>
 
-<form on:submit={handleSubmit} class="space-y-4">
-	<div>
-		<label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
-		<input
-			type="number"
-			id="amount"
-			bind:value={amount}
-			class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-		/>
-	</div>
-
-	<div>
-		<label for="from" class="block text-sm font-medium text-gray-700">From</label>
-		<input
-			type="date"
-			id="from"
-			bind:value={from}
-			class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-		/>
-	</div>
-
-	<div>
-		<label for="to" class="block text-sm font-medium text-gray-700">To</label>
-		<input
-			type="date"
-			id="to"
-			bind:value={to}
-			class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-		/>
-	</div>
-
-	<div>
-		<label for="changeType" class="block text-sm font-medium text-gray-700">Change Type</label>
-		<select
-			id="changeType"
-			bind:value={changeTypeId}
-			class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-		>
-			<option value="">Select a type</option>
-			{#each changeTypes as type}
-				<option value={type.id}>{type.name}</option>
-			{/each}
-		</select>
-	</div>
-
-	<div>
-		<label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-		<textarea
-			id="description"
-			bind:value={description}
-			class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-		/>
-	</div>
-
+<Form on:submit={handleSubmit}>
+	<Input type="number" label="Amount" bind:value={amount} />
+	<Input type="date" label="From" bind:value={from} />
+	<Input type="date" label="To" bind:value={to} />
+	<Select
+		label="Change Type"
+		bind:value={changeTypeId}
+		options={changeTypes.map((type) => ({ value: type.id, label: type.name }))}
+	/>
+	<Textarea label="Description" bind:value={description} />
 	<button
 		type="submit"
 		class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
 	>
 		Submit
 	</button>
-</form>
+</Form>
