@@ -8,11 +8,19 @@
     superForm,
   } from "sveltekit-superforms";
   import { zodClient } from "sveltekit-superforms/adapters";
+  import { createEventDispatcher } from "svelte";
+  
+  const dispatch = createEventDispatcher();
 
   let { data }: { data: { form: SuperValidated<Infer<GoalSchema>> } } = $props();
 
   const form = superForm(data.form, {
     validators: zodClient(goalSchema),
+    onResult: ({ result }) => {
+      if (result.success) {
+        dispatch('success');
+      }
+    }
   });
 
   const { form: formData, enhance } = form;

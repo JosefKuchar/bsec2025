@@ -6,11 +6,13 @@
   import GoalForm from "./goal-form.svelte"; // Import your GoalForm component
   
   export let data: PageData;
-  
+
+  let dialogOpen = false;
+  let dialogOpen = false;
 </script>
 
 <div class="space-y-4">
-	<Dialog.Root>
+	<Dialog.Root bind:open={dialogOpen}>
 		<Dialog.Trigger>New Goal</Dialog.Trigger>
 		<Dialog.Content>
 		  <Dialog.Header>
@@ -21,7 +23,7 @@
 		  </Dialog.Header>
 	  
 		  <!-- Include the GoalForm component here -->
-		  <GoalForm data={{ form: data.form }} />
+		  <GoalForm data={{ form: data.form }} on:success={() => dialogOpen = false} />
 		</Dialog.Content>
 	  </Dialog.Root>
 
