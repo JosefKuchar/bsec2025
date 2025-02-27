@@ -7,10 +7,10 @@ import DataTableActions from "./data-table-actions.svelte";
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 export type Goal = {
-    id: number;
+    id: string | number;
     name: string;
     description: string;
-    type: "percentage" | "amount" | "difference";
+    type: "percentage" | "amount";
     value: number;
 };
  
