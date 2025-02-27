@@ -24,12 +24,22 @@ export const columns: ColumnDef<Goal>[] = [
         header: "Description",
     },
     {
-        accessorKey: "type",
-        header: "Type",
-    },
-    {
         accessorKey: "value",
         header: "Value",
+        cell: ({ row }) => {
+            // if type is percentage, show value as a percentage
+            console.log(row.original.type);
+            if (row.original.type == 0) {
+                // percent, style it green if positive, red if negative
+                return `${row.original.value}%`;
+            } else if (row.original.type == 2) {
+                // difference
+                return `±${row.original.value}`;
+            } else {
+                // amount
+                return row.original.value;
+            }
+        }
     },
     {
         id: "actions",
