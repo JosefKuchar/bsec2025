@@ -18,7 +18,7 @@ model ChangeType {
   id      Int      @id @default(autoincrement())
   emoji   String
   name    String
-  dir     Int      @default(1) // 1 - prijem, 2  prijem
+  dir     Int      @default(1) // 1 - prijem, 2 - vydaj
   changes Change[]
   goals   Goal[]
 }
