@@ -56,20 +56,40 @@
 		};
 	});
 
+	function sfc32(a, b, c, d) {
+		return function () {
+			a |= 0;
+			b |= 0;
+			c |= 0;
+			d |= 0;
+			let t = (((a + b) | 0) + d) | 0;
+			d = (d + 1) | 0;
+			a = b ^ (b >>> 9);
+			b = (c + (c << 3)) | 0;
+			c = (c << 21) | (c >>> 11);
+			c = (c + t) | 0;
+			return (t >>> 0) / 4294967296;
+		};
+	}
+	const getRand = sfc32(1, 2, 3, 4);
+
 	const months = data.months;
 	const goalsLongterm = data.goals.map((goal) => {
 		let data = [];
-		for (let i = 0; i < 12; i++) {
-			let cat = months[i].categories.find((category: { id: number }) => category.id === goal.changeTypeId);
-			if (cat) {
-				if (cat.amount > goal.value) {
-					data.push(true);
-				} else {
-					data.push(false);
-				}
-			} else {
-				data.push(false);
-			}
+		for (let i = 0; i < 24; i++) {
+			data.push(getRand() > 0.3);
+			// let cat = months[i].categories.find(
+			// 	(category: { id: number }) => category.id === goal.changeTypeId
+			// );
+			// if (cat) {
+			// 	if (cat.amount > goal.value) {
+			// 		data.push(true);
+			// 	} else {
+			// 		data.push(false);
+			// 	}
+			// } else {
+			// 	data.push(false);
+			// }
 		}
 
 		// Calculate max streak
@@ -139,15 +159,12 @@
 	};		
 
 	console.log(data.months[2]);
-	data.months[1].positiveAmount = 100;
-
-	data.balance = 300;
 
 	function calculateGoalProgress(goal) {
 		console.log(goal);
 
 		const currentMonth = new Date().getMonth();
-		
+
 		// get goal value
 		const goalValue = goal.value;
 
