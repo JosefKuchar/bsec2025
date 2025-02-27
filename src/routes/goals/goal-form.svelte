@@ -9,6 +9,7 @@
   } from "sveltekit-superforms";
   import { zodClient } from "sveltekit-superforms/adapters";
   import { createEventDispatcher } from "svelte";
+  import * as Select from "$lib/components/ui/select/index.js";
   
   const dispatch = createEventDispatcher();
 
@@ -24,6 +25,15 @@
   });
 
   const { form: formData, enhance } = form;
+
+import { onMount } from "svelte";
+
+onMount(() => {
+  if (formData.type !== undefined) {
+    formData.type = Number(formData.type);
+  }
+});
+
 </script>
 
 <form method="POST" use:enhance>
@@ -46,6 +56,40 @@
       {/snippet}
     </Form.Control>
     <Form.Description>A brief description of your goal.</Form.Description>
+    <Form.FieldErrors />
+  </Form.Field>
+
+  <Form.Field {form} name="amount">
+    <Form.Control>
+      {#snippet children({ props })}
+        <Form.Label>Amount</Form.Label>
+        <Input {...props} bind:value={$formData.amount} />
+      {/snippet}
+    </Form.Control>
+    <Form.Description>The amount you want to save.</Form.Description>
+    <Form.FieldErrors />
+  </Form.Field>
+
+  <Form.Field {form} name="type">
+    <Form.Control>
+      {#snippet children({ props })}
+        <Form.Label>Type</Form.Label>
+        <Select.Root type="single" name={props.name} bind:value={$formData.type}>
+          <Select.Trigger {...props}>
+            {$formData.type == 0
+              ? "Percentage"
+              : $formData.type == 1
+              ? "Amount"
+              : "Select a goal type"}
+          </Select.Trigger>
+          <Select.Content>
+            <Select.Item value=0>Percentage</Select.Item>
+            <Select.Item value=1>Amount</Select.Item>
+          </Select.Content>
+        </Select.Root>
+      {/snippet}
+    </Form.Control>
+    <Form.Description>The type of goal you want to set.</Form.Description>
     <Form.FieldErrors />
   </Form.Field>
 
