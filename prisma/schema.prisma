@@ -12,3 +12,38 @@ datasource db {
   provider = "sqlite"
   url      = "file:./dev.db"
 }
+
+// Kategorie prijmu / vydaju
+model ChangeType {
+  id      Int      @id @default(autoincrement())
+  emoji   String
+  name    String
+  dir     Int      @default(1) // 1 - prijem, 2  prijem
+  changes Change[]
+  goals   Goal[]
+}
+
+// Prijem / vydej
+model Change {
+  id        Int        @id @default(autoincrement())
+  typeId    Int
+  frequency Int // 0 - jednorazove
+  amount    Int
+  from      DateTime // datum aj pre jednorazove
+  to        DateTime
+  type      ChangeType @relation(fields: [typeId], references: [id])
+}
+
+// Cile
+// kategorie:
+//  - Rozdil pravidelnych prijmu a vydaju
+//  - kategoria >/< value
+model Goal {
+  id           Int         @id @default(autoincrement())
+  type         Int
+  value        Float // procentualni, absolutni hodnota, rozdil prijem vydaj
+  name         String
+  description  String
+  changeTypeId Int?
+  changeType   ChangeType? @relation(fields: [changeTypeId], references: [id])
+}
