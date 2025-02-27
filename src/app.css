@@ -82,4 +82,17 @@
     background: linear-gradient(180deg, rgba(11,50,100,0.85) 0%, rgba(11,50,100,1) 100%);
   }
 
+  .underline-link {
+    @apply relative;
+  }
+
+  .underline-link::after {
+    content: "";
+    @apply absolute bottom-[-2px] left-[0px] w-0 h-[2px] bg-link-primary transition-all duration-300 ease-in-out;
+  }
+
+  .underline-link:hover::after {
+    @apply w-full;
+  }
+
 }
