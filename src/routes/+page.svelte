@@ -126,10 +126,7 @@
 	};
 
 	console.log(data.months[2]);
-	data.months[1].positiveAmount = 100;
-
-	data.balance = 300;
-
+	
 	function calculateGoalProgress(goal) {
 		console.log(goal);
 
