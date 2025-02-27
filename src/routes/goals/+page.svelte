@@ -2,38 +2,28 @@
   import DataTable from "./data-table.svelte";
   import { columns } from "./columns.js";
   import type { PageData } from "../$types";
-  import { Button } from "$lib/components/ui/button";
-  import GoalForm from "./goal-form.svelte";
-  import { fade } from "svelte/transition";
+  import * as Dialog from "$lib/components/ui/dialog/index.js";
+  import GoalForm from "./goal-form.svelte"; // Import your GoalForm component
   
   export let data: PageData;
   
-  let showForm = false;
-  
-  function toggleForm() {
-    showForm = !showForm;
-  }
-  
-  function handleSubmit() {
-    toggleForm();
-    // Add any additional submission logic here
-  }
 </script>
 
 <div class="space-y-4">
-  <Button variant="outline" class="mb-6 ml-auto" on:click={toggleForm}>Add Goal</Button>
-  
-  {#if showForm}
-    <div transition:fade class="p-6 border rounded-lg bg-background">
-      <GoalForm
-        formData={data.form}
-        title="Create New Goal"
-        description="Set up a new tracking goal for your financial targets"
-        submitText="Create Goal"
-        on:submit={handleSubmit}
-      />
-    </div>
-  {/if}
+	<Dialog.Root>
+		<Dialog.Trigger>New Goal</Dialog.Trigger>
+		<Dialog.Content>
+		  <Dialog.Header>
+			<Dialog.Title>New Goal</Dialog.Title>
+			<Dialog.Description>
+			  Create a new goal to track your progress. Fill out the form below to get started.
+			</Dialog.Description>
+		  </Dialog.Header>
+	  
+		  <!-- Include the GoalForm component here -->
+		  <GoalForm data={{ form: data.form }} />
+		</Dialog.Content>
+	  </Dialog.Root>
 
   <DataTable data={data.goals} {columns} />
 </div>
