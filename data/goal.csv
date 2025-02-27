@@ -1,7 +1,7 @@
 id,type,value,name,description,changeTypeId
 1,1,0.1,Save 10%,Save 10% of income,1
 2,0,500,Emergency Fund,Build an emergency fund of 500,2
-3,2,1000,Pay off Credit Card,Pay off credit card debt,9
+3,2,1000,Pay off Credit Card,Pay off credit card debt,4
 4,1,0.05,Invest 5%,Invest 5% of income,1
 5,2,200,Reduce Food Expenses,Reduce monthly food expenses by 200,2
 6,0,2000,Vacation Fund,Save 2000 for vacation,2

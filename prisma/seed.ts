@@ -51,7 +51,6 @@ async function seedChanges() {
 				await prisma.change.create({
 					data: {
                         typeId: parseInt(record.typeId, 10),
-                        frequency: parseInt(record.frequency, 10),
                         amount: parseFloat(record.amount),
                         from: record.from,
                         to: record.to

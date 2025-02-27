@@ -21,6 +21,21 @@ export function getFrequencyString(frequency: Frequency) {
 	}
 }
 
+export function getfrequencyFromString(frequency: string) {
+	switch (frequency) {
+		case 'Jednorázově':
+			return Frequency.OneTime;
+		case 'Denně':
+			return Frequency.Daily;
+		case 'Týdně':
+			return Frequency.Weekly;
+		case 'Měsíčně':
+			return Frequency.Monthly;
+		case 'Ročně':
+			return Frequency.Yearly;
+	}
+}
+
 export function frequencyToDays(frequency: Frequency) {
 	switch (frequency) {
 		case Frequency.OneTime:
