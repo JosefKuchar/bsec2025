@@ -124,8 +124,6 @@
 	const spinWheel = () => {
 		wheel.spinToItem(1, 4000, true, 10);
 	};
-
-	console.log(goalsLongterm);
 </script>
 
 <div class="container">
@@ -147,7 +145,10 @@
 					>
 						<svelte:fragment slot="aboveMarks">
 							<Text
-								value="10 000 Kč"
+								value={new Intl.NumberFormat('cs-CZ', {
+									style: 'currency',
+									currency: 'CZK'
+								}).format(data.balance)}
 								textAnchor="middle"
 								verticalAnchor="middle"
 								class="text-4xl"
