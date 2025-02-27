@@ -4,15 +4,18 @@ import tailwindcssAnimate from "tailwindcss-animate";
 /** @type {import('tailwindcss').Config} */
 const config = {
 	darkMode: ["class"],
-	content: ["./src/**/*.{html,js,svelte,ts}"],
+	content: ["./src/**/*.{html,js,svelte,ts}", "./node_modules/layerchart/**/*.{svelte,js}"],
 	safelist: ["dark"],
 	theme: {
 		container: {
 			center: true,
-			padding: "2rem",
 			screens: {
-				"2xl": "1400px"
-			}
+				sm: "95%",
+				md: "95%",
+				lg: "880px",
+				xl: "962px",
+				'2xl': "1290px",
+			},
 		},
 		extend: {
 			colors: {
@@ -21,6 +24,9 @@ const config = {
 				ring: "hsl(var(--ring) / <alpha-value>)",
 				background: "hsl(var(--background) / <alpha-value>)",
 				foreground: "hsl(var(--foreground) / <alpha-value>)",
+				link: {
+					primary: "#007BFF"
+				},
 				primary: {
 					DEFAULT: "hsl(var(--primary) / <alpha-value>)",
 					foreground: "hsl(var(--primary-foreground) / <alpha-value>)"
@@ -61,6 +67,7 @@ const config = {
         		},
 			},
 			borderRadius: {
+				'24': "24px",
 				xl: "calc(var(--radius) + 4px)",
 				lg: "var(--radius)",
 				md: "calc(var(--radius) - 2px)",
