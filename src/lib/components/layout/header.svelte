@@ -7,10 +7,11 @@
         <a href="/"><Logo /></a>
     </div>
     <div class="col-span-6 flex justify-center">
-        <div class="bg-white rounded-24 transition flex duration-150 w-fit gap-[20px] py-[10px] px-[30px]">
-            <a href="/" class="underline-link text-[16px] text-link-primary font-bold">Dashboard</a>
-            <a href="/changes" class="underline-link text-[16px] text-link-primary font-bold">Zmeny</a>
-            <a href="/goals" class="underline-link text-[16px] text-link-primary font-bold">Ciele</a>
+        <div class="bg-white rounded-24 transition flex duration-150 w-fit gap-[32px] py-[10px] px-[30px]">
+            <a href="/" class="underline-link text-[16px] text-blue font-bold">Dashboard</a>
+            <a href="/changes" class="underline-link text-[16px] text-blue font-bold">Zmeny</a>
+            <a href="/goals" class="underline-link text-[16px] text-blue font-bold">Ciele</a>
+            <a href="/achievements" class="underline-link text-[16px] text-blue font-bold">Achievements</a>
         </div>
     </div>
     <div class="col-span-3 flex justify-end">
