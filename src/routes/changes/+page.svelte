@@ -2,6 +2,7 @@
 	import type { PageData } from './$types';
 	export let data: PageData;
 	let changes = data.changes;
+	import ChangeModal from '$lib/components/ui/change_modal/ChangeModal.svelte';
 </script>
 
 <svelte:head>
@@ -10,7 +11,7 @@
 </svelte:head>
 
 <div class="container mx-auto py-8">
-	<h1 class="text-3xl font-bold mb-4">Changes</h1>
+	<h1 class="mb-4 text-3xl font-bold">Changes</h1>
 
 	<!-- Placeholder for the list -->
 	{#if changes.length === 0}
@@ -18,7 +19,11 @@
 	{:else}
 		<ul class="list-inside">
 			{#each changes as change}
-				<li class="mb-2">{change.typeId} {change.amount} {change.frequency}</li>
+				<li class="mb-2 rounded-lg border shadow-sm transition-shadow duration-200 hover:shadow-md">
+					<div>
+						<ChangeModal {change} />
+					</div>
+				</li>
 			{/each}
 		</ul>
 	{/if}
